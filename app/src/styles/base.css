@@ -1,0 +1,40 @@
+* { box-sizing: border-box; }
+
+:root {
+  --page: #eef1f6;
+  --ink: #1a2238;
+  --dim: #6b7592;
+  --gold: #b8893f;
+  --hair: rgba(40, 60, 90, 0.1);
+  --card: rgba(255, 255, 255, 0.62);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #eef1f6;
+  color: #1a2238;
+  overflow-x: hidden;
+  font-family: -apple-system, "PingFang SC", "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(70% 48% at 80% -6%, rgba(120, 160, 225, 0.2), transparent 60%),
+    radial-gradient(56% 44% at 4% 10%, rgba(224, 160, 110, 0.14), transparent 58%),
+    radial-gradient(90% 60% at 50% 118%, rgba(150, 140, 200, 0.12), transparent 62%),
+    #eef1f6;
+}
+
+a { color: inherit; }
+
+button { font-family: inherit; }

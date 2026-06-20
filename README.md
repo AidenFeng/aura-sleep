@@ -1,25 +1,49 @@
-# CODING AGENTS: READ THIS FIRST
+# Aura — smart-sleep marketing site
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+Light-themed, champagne-gold marketing site for the Aura smart-mattress system.
+Two pages — the product homepage and the buy page — built natively in
+Vite + React + TypeScript from the Claude Design HTML/CSS/JS prototype.
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+## Layout
 
-## What you should do — IMPORTANT
+```
+app/             Vite + React + TS application (the real codebase)
+project/         Original Claude Design HTML/CSS/JS prototype (for reference)
+chats/           Design-conversation transcripts (for reference)
+```
 
-**Read the chat transcripts first.** There are 2 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+## Run locally
 
-**Read `project/Aura 产品主页.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+```bash
+cd app
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # → app/dist
+npm run preview  # serve the production build
+```
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+## Deploy
 
-## About the design files
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds the
+site with the right `base` for GitHub Pages and deploys to
+`https://<owner>.github.io/<repo>/`.
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+## What's where
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
-
-## Bundle contents
-
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `产品主页动画素材需求 (Copy)` project files (HTML prototypes, assets, components)
+- `app/src/pages/Home.tsx` — `/` — full-bleed video hero, alternating
+  feature stories (smart climate · AI sleep analysis · women's health),
+  spec band, personas, pricing, FAQ, waitlist, closing CTA.
+- `app/src/pages/Buy.tsx` — `/buy` — image gallery + sticky buy box
+  (size / plan / qty / live total), what's-included, feature strip,
+  plan compare, reviews, specs, FAQ, cart drawer + toast.
+- `app/src/ds/` — native reimplementation of the AuraDS primitives
+  (`Title`, `Body`, `Card`, `Button`, `Pill`, `Toggle`, …) with the
+  resolved light + gold palette lifted verbatim from the published
+  bundle's source.
+- `app/src/scenes/` — animated SVG app demos (`MattressViz`,
+  `SceneClimate`, `SceneWomen`, `SceneAnalysis`), `requestAnimationFrame`
+  driven, gated to the in-view interval.
+- `app/src/lib/motion.tsx` — motion context (speed / paused),
+  `useLoop`, easing helpers, `useSharedLang` (中/EN persisted in
+  `localStorage`).
+- `app/public/assets/` — logo, mattress photo, three product videos.

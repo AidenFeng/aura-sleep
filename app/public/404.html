@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting…</title>
+    <script>
+      // SPA fallback for GitHub Pages: rewrite the URL into a single
+      // query-string path that index.html will decode on load.
+      var l = window.location;
+      var seg = l.pathname.split('/').filter(Boolean);
+      // First path segment is the repo name on Pages; keep it as the base.
+      var base = seg.shift() || '';
+      var rest = '/' + seg.join('/') + (l.search || '') + (l.hash || '');
+      l.replace(l.origin + '/' + base + '/?p=' + encodeURIComponent(rest));
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aura — 智能睡眠系统</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/aura-logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Decode the SPA fallback hop set by 404.html so deep links work
+      // on GitHub Pages.
+      (function () {
+        var qs = new URLSearchParams(window.location.search);
+        var p = qs.get('p');
+        if (p) {
+          qs.delete('p');
+          var rest = qs.toString();
+          var base = window.location.pathname.replace(/\/$/, '');
+          window.history.replaceState(null, '', base + p + (rest ? '?' + rest : ''));
+        }
+      })();
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
