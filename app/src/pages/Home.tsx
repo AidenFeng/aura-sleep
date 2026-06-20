@@ -86,35 +86,53 @@ const HERO_VIDEO = 'assets/hero-cover-long.mp4';
 function Hero({ lang }: { lang: Lang }) {
   const tx = (zh: string, en: string) => (lang === 'en' ? en : zh);
   const nav = useNavigate();
-  const [heroMuted, setHeroMuted] = React.useState(false);
+  // Start muted so browser autoplay policy allows the video to start.
+  // User can unmute via the button below.
+  const [heroMuted, setHeroMuted] = React.useState(true);
+  const videoRef = React.useRef<HTMLVideoElement | null>(null);
+  // Keep the element's muted/volume in sync with state (React's `muted` prop
+  // alone is unreliable across browsers).
+  React.useEffect(() => {
+    const el = videoRef.current;
+    if (el) {
+      el.muted = heroMuted;
+      el.volume = heroMuted ? 0 : 1;
+    }
+  }, [heroMuted]);
+  const replay = () => {
+    const el = videoRef.current;
+    if (!el) return;
+    try { el.currentTime = 0; } catch (e) { /* ignore */ }
+    const pr = el.play();
+    if (pr && pr.catch) pr.catch(() => { /* ignore */ });
+  };
   const trust = [tx('30 晚无忧试睡', '30-night trial'), tx('双区独立控温', 'Dual-zone control'), tx('适配任何床垫', 'Fits any mattress')];
   return (
     <section className="hero" id="top">
       <video
+        ref={videoRef}
         className="hero-video"
         src={asset(HERO_VIDEO)}
         autoPlay
         loop={false}
         muted={heroMuted}
         playsInline
-        ref={(el) => {
-          if (el) {
-            el.muted = heroMuted;
-            el.volume = heroMuted ? 0 : 1;
-            if (el.paused) {
-              const pr = el.play();
-              if (pr && pr.catch) pr.catch(() => {});
-            }
-          }
-        }}
       />
       <div className="hero-scrim" />
-      <button className="hero-mute" onClick={() => setHeroMuted((m) => !m)} aria-label={heroMuted ? tx('取消静音', 'Unmute') : tx('静音', 'Mute')}>
-        <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M4 9v6h4l5 4V5L8 9H4z" fill="#fff" stroke="#fff" />
-          {heroMuted ? <path d="M17 9l4 6M21 9l-4 6" /> : <path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8 8 0 0 1 0 12" />}
-        </svg>
-      </button>
+      <div className="hero-controls">
+        <button className="hero-ctl" onClick={replay} aria-label={tx('重新播放', 'Replay')} title={tx('重新播放', 'Replay')}>
+          <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 12a9 9 0 1 0 3-6.7" />
+            <path d="M3 4v5h5" fill="#fff" stroke="#fff" />
+          </svg>
+        </button>
+        <button className="hero-ctl" onClick={() => setHeroMuted((m) => !m)} aria-label={heroMuted ? tx('取消静音', 'Unmute') : tx('静音', 'Mute')} title={heroMuted ? tx('取消静音', 'Unmute') : tx('静音', 'Mute')}>
+          <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 9v6h4l5 4V5L8 9H4z" fill="#fff" stroke="#fff" />
+            {heroMuted ? <path d="M17 9l4 6M21 9l-4 6" /> : <path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8 8 0 0 1 0 12" />}
+          </svg>
+        </button>
+      </div>
       <div className="hero-grid page-wrap">
         <div className="hero-text reveal in">
           <div className="eyebrow"><Pill on label={tx('智能分区温控床垫', 'Smart climate mattress')} /></div>
