@@ -1,0 +1,100 @@
+/* AuraMark design tokens — authored from app/src/theme/colors.ts.
+ * The components are self-styling (react-native-web injects their StyleSheet
+ * rules at runtime), so these custom properties are the token reference the
+ * design agent codes against. :root = the app default (dark theme, silver
+ * accent); [data-theme="light"] mirrors the light palette. */
+:root {
+  /* surfaces */
+  --aura-bg: #070b15;
+  --aura-bg-top: #111d38;
+  --aura-panel: #0f1627;
+  --aura-panel-alt: rgba(255, 255, 255, 0.07);
+  --aura-glass-nav: rgba(11, 16, 28, 0.62);
+  --aura-glass: rgba(255, 255, 255, 0.075);
+  --aura-glass-strong: rgba(255, 255, 255, 0.125);
+  --aura-glass-hi: rgba(255, 255, 255, 0.2);
+  --aura-glass-border: rgba(212, 224, 242, 0.2);
+  --aura-hairline: rgba(255, 255, 255, 0.06);
+  --aura-border: #212d4c;
+
+  /* ink */
+  --aura-text: #e9eef9;
+  --aura-text-dim: #aab6d4;
+
+  /* accent family (silver = base palette) */
+  --aura-accent: #dae1ed;
+  --aura-accent-2: #c2cbd9;
+  --aura-brand: #dae1ed;
+  --aura-gold: #d4b886;
+  --aura-warm: #e08a60;
+  --aura-cool: #a6cdf0;
+  --aura-purple: #a78bfa;
+  --aura-warn: #e3c06c;
+  --aura-danger: #e16a7d;
+  --aura-ok: #62c79c;
+
+  /* spacing scale (px) */
+  --aura-space-xs: 4px;
+  --aura-space-sm: 8px;
+  --aura-space-md: 12px;
+  --aura-space-lg: 16px;
+  --aura-space-xl: 24px;
+  --aura-space-xxl: 32px;
+
+  /* radius scale (px) */
+  --aura-radius-sm: 10px;
+  --aura-radius-md: 16px;
+  --aura-radius-lg: 22px;
+  --aura-radius-pill: 999px;
+
+  /* display serif (served at runtime via @expo-google-fonts/fraunces) */
+  --aura-font-display: 'Fraunces_600SemiBold', 'Fraunces', Georgia, serif;
+  --aura-font-display-med: 'Fraunces_500Medium', 'Fraunces', Georgia, serif;
+
+  /* type scale (size / weight) */
+  --aura-type-hero-size: 28px;
+  --aura-type-hero-weight: 800;
+  --aura-type-title-size: 22px;
+  --aura-type-title-weight: 600;
+  --aura-type-headline-size: 17px;
+  --aura-type-headline-weight: 800;
+  --aura-type-body-lg-size: 15px;
+  --aura-type-body-lg-weight: 600;
+  --aura-type-body-size: 14px;
+  --aura-type-body-weight: 400;
+  --aura-type-label-size: 12.5px;
+  --aura-type-label-weight: 600;
+  --aura-type-caption-size: 11px;
+  --aura-type-caption-weight: 400;
+
+  /* elevation */
+  --aura-shadow-knob: 0px 1px 3px rgba(0, 0, 0, 0.25);
+  --aura-shadow-thumb: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  --aura-shadow-float: 0px 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='light'] {
+  --aura-bg: #f2f3f7;
+  --aura-bg-top: #ffffff;
+  --aura-panel: #ffffff;
+  --aura-panel-alt: rgba(80, 100, 140, 0.09);
+  --aura-glass-nav: rgba(255, 255, 255, 0.74);
+  --aura-glass: rgba(255, 255, 255, 0.62);
+  --aura-glass-strong: rgba(255, 255, 255, 0.8);
+  --aura-glass-hi: rgba(255, 255, 255, 0.92);
+  --aura-glass-border: rgba(150, 168, 195, 0.16);
+  --aura-hairline: rgba(60, 80, 110, 0.06);
+  --aura-border: #dfe3ee;
+  --aura-text: #1a2238;
+  --aura-text-dim: #6b7592;
+  --aura-accent: #aab7c9;
+  --aura-accent-2: #cad2df;
+  --aura-brand: #aab7c9;
+  --aura-gold: #ab8a52;
+  --aura-warm: #cf6f3f;
+  --aura-cool: #8ab4d8;
+  --aura-purple: #8b5cf6;
+  --aura-warn: #a8842e;
+  --aura-danger: #cf4a63;
+  --aura-ok: #27926a;
+}

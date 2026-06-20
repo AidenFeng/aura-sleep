@@ -1,0 +1,280 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": [
+          {
+            "group": [
+              "components/general/Body/**",
+              "components/general/Button/**",
+              "components/general/Caption/**",
+              "components/general/Card/**",
+              "components/general/Choice/**",
+              "components/general/GlassTile/**",
+              "components/general/Label/**",
+              "components/general/Pill/**",
+              "components/general/PremiumTag/**",
+              "components/general/Screen/**",
+              "components/general/SectionLabel/**",
+              "components/general/SegmentControl/**",
+              "components/general/Title/**",
+              "components/general/Toggle/**"
+            ],
+            "message": "Import design-system components from 'index.js', not component internals."
+          }
+        ]
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/\\b\\d+px\\b/]",
+        "message": "Raw px value — use a design-system spacing token via var()."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Body'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|dim|serif|variant|style|key|ref|className|style|children)$/]",
+        "message": "<Body> doesn't accept that prop. Declared props: children, dim, serif, variant, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Body'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:hero|title|headline|bodyLg|body|label|caption)$/]",
+        "message": "<Body> variant must be one of 'hero' | 'title' | 'headline' | 'bodyLg' | 'body' | 'label' | 'caption'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|variant|icon|disabled|onPress|style|key|ref|className|style|children)$/]",
+        "message": "<Button> doesn't accept that prop. Declared props: label, variant, icon, disabled, onPress, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Button'] > JSXAttribute[name.name='variant'] > Literal[value!=/^(?:solid|ghost|line)$/]",
+        "message": "<Button> variant must be one of 'solid' | 'ghost' | 'line'."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Caption'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|dim|style|key|ref|className|style|children)$/]",
+        "message": "<Caption> doesn't accept that prop. Declared props: children, dim, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Card'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|highlight|flat|radius|style|key|ref|className|style|children)$/]",
+        "message": "<Card> doesn't accept that prop. Declared props: children, highlight, flat, radius, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Choice'] > JSXAttribute > JSXIdentifier[name!=/^(?:value|values|onPick|onToggle|options|multi|wrap|flat|key|ref|className|style|children)$/]",
+        "message": "<Choice> doesn't accept that prop. Declared props: value, values, onPick, onToggle, options, multi, wrap, flat."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='GlassTile'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|style|key|ref|className|style|children)$/]",
+        "message": "<GlassTile> doesn't accept that prop. Declared props: children, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Label'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|dim|style|key|ref|className|style|children)$/]",
+        "message": "<Label> doesn't accept that prop. Declared props: children, dim, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Pill'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|on|key|ref|className|style|children)$/]",
+        "message": "<Pill> doesn't accept that prop. Declared props: label, on."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='PremiumTag'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|key|ref|className|style|children)$/]",
+        "message": "<PremiumTag> doesn't accept that prop. Declared props: label."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Screen'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|safeTop|plain|key|ref|className|style|children)$/]",
+        "message": "<Screen> doesn't accept that prop. Declared props: children, safeTop, plain."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='SectionLabel'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|style|key|ref|className|style|children)$/]",
+        "message": "<SectionLabel> doesn't accept that prop. Declared props: children, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='SegmentControl'] > JSXAttribute > JSXIdentifier[name!=/^(?:options|active|onPick|key|ref|className|style|children)$/]",
+        "message": "<SegmentControl> doesn't accept that prop. Declared props: options, active, onPick."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Title'] > JSXAttribute > JSXIdentifier[name!=/^(?:children|style|key|ref|className|style|children)$/]",
+        "message": "<Title> doesn't accept that prop. Declared props: children, style."
+      },
+      {
+        "selector": "JSXOpeningElement[name.name='Toggle'] > JSXAttribute > JSXIdentifier[name!=/^(?:on|onPress|label|key|ref|className|style|children)$/]",
+        "message": "<Toggle> doesn't accept that prop. Declared props: on, onPress, label."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {
+      "Body": {
+        "replaces": []
+      },
+      "Button": {
+        "replaces": []
+      },
+      "Caption": {
+        "replaces": []
+      },
+      "Card": {
+        "replaces": []
+      },
+      "Choice": {
+        "replaces": []
+      },
+      "GlassTile": {
+        "replaces": []
+      },
+      "Label": {
+        "replaces": []
+      },
+      "Pill": {
+        "replaces": []
+      },
+      "PremiumTag": {
+        "replaces": []
+      },
+      "Screen": {
+        "replaces": []
+      },
+      "SectionLabel": {
+        "replaces": []
+      },
+      "SegmentControl": {
+        "replaces": []
+      },
+      "Title": {
+        "replaces": []
+      },
+      "Toggle": {
+        "replaces": []
+      }
+    },
+    "tokens": [
+      "--aura-accent",
+      "--aura-accent-2",
+      "--aura-bg",
+      "--aura-bg-top",
+      "--aura-border",
+      "--aura-brand",
+      "--aura-cool",
+      "--aura-danger",
+      "--aura-font-display",
+      "--aura-font-display-med",
+      "--aura-glass",
+      "--aura-glass-border",
+      "--aura-glass-hi",
+      "--aura-glass-nav",
+      "--aura-glass-strong",
+      "--aura-gold",
+      "--aura-hairline",
+      "--aura-ok",
+      "--aura-panel",
+      "--aura-panel-alt",
+      "--aura-purple",
+      "--aura-radius-lg",
+      "--aura-radius-md",
+      "--aura-radius-pill",
+      "--aura-radius-sm",
+      "--aura-shadow-float",
+      "--aura-shadow-knob",
+      "--aura-shadow-thumb",
+      "--aura-space-lg",
+      "--aura-space-md",
+      "--aura-space-sm",
+      "--aura-space-xl",
+      "--aura-space-xs",
+      "--aura-space-xxl",
+      "--aura-text",
+      "--aura-text-dim",
+      "--aura-type-body-lg-size",
+      "--aura-type-body-lg-weight",
+      "--aura-type-body-size",
+      "--aura-type-body-weight",
+      "--aura-type-caption-size",
+      "--aura-type-caption-weight",
+      "--aura-type-headline-size",
+      "--aura-type-headline-weight",
+      "--aura-type-hero-size",
+      "--aura-type-hero-weight",
+      "--aura-type-label-size",
+      "--aura-type-label-weight",
+      "--aura-type-title-size",
+      "--aura-type-title-weight",
+      "--aura-warm",
+      "--aura-warn"
+    ],
+    "tokenKinds": {
+      "--aura-bg": "color",
+      "--aura-bg-top": "color",
+      "--aura-panel": "color",
+      "--aura-panel-alt": "color",
+      "--aura-glass-nav": "color",
+      "--aura-glass": "color",
+      "--aura-glass-strong": "color",
+      "--aura-glass-hi": "color",
+      "--aura-glass-border": "color",
+      "--aura-hairline": "color",
+      "--aura-border": "color",
+      "--aura-text": "font",
+      "--aura-text-dim": "font",
+      "--aura-accent": "color",
+      "--aura-accent-2": "color",
+      "--aura-brand": "color",
+      "--aura-gold": "color",
+      "--aura-warm": "color",
+      "--aura-cool": "color",
+      "--aura-purple": "color",
+      "--aura-warn": "color",
+      "--aura-danger": "color",
+      "--aura-ok": "color",
+      "--aura-space-xs": "spacing",
+      "--aura-space-sm": "spacing",
+      "--aura-space-md": "spacing",
+      "--aura-space-lg": "spacing",
+      "--aura-space-xl": "spacing",
+      "--aura-space-xxl": "spacing",
+      "--aura-radius-sm": "radius",
+      "--aura-radius-md": "radius",
+      "--aura-radius-lg": "radius",
+      "--aura-radius-pill": "radius",
+      "--aura-font-display": "font",
+      "--aura-font-display-med": "font",
+      "--aura-type-hero-size": "font",
+      "--aura-type-hero-weight": "font",
+      "--aura-type-title-size": "font",
+      "--aura-type-title-weight": "font",
+      "--aura-type-headline-size": "font",
+      "--aura-type-headline-weight": "font",
+      "--aura-type-body-lg-size": "font",
+      "--aura-type-body-lg-weight": "font",
+      "--aura-type-body-size": "font",
+      "--aura-type-body-weight": "font",
+      "--aura-type-label-size": "font",
+      "--aura-type-label-weight": "font",
+      "--aura-type-caption-size": "font",
+      "--aura-type-caption-weight": "font",
+      "--aura-shadow-knob": "shadow",
+      "--aura-shadow-thumb": "shadow",
+      "--aura-shadow-float": "shadow"
+    },
+    "fontFamilies": []
+  }
+}
