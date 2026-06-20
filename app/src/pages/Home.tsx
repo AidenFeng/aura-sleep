@@ -79,6 +79,10 @@ function Check() {
   );
 }
 
+// Switch this to 'assets/hero-cover.mp4' to revert to the original
+// (4.2MB) hero background. Both files ship with the site.
+const HERO_VIDEO = 'assets/hero-cover-long.mp4';
+
 function Hero({ lang }: { lang: Lang }) {
   const tx = (zh: string, en: string) => (lang === 'en' ? en : zh);
   const nav = useNavigate();
@@ -88,7 +92,7 @@ function Hero({ lang }: { lang: Lang }) {
     <section className="hero" id="top">
       <video
         className="hero-video"
-        src={asset('assets/hero-cover.mp4')}
+        src={asset(HERO_VIDEO)}
         autoPlay
         loop={false}
         muted={heroMuted}
