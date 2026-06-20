@@ -86,12 +86,28 @@ const HERO_VIDEO = 'assets/hero-cover-long.mp4';
 function Hero({ lang }: { lang: Lang }) {
   const tx = (zh: string, en: string) => (lang === 'en' ? en : zh);
   const nav = useNavigate();
-  // Start muted so browser autoplay policy allows the video to start.
-  // User can unmute via the button below.
-  const [heroMuted, setHeroMuted] = React.useState(true);
+  // Default unmuted; if the browser blocks unmuted autoplay (the common
+  // case on first visit), the mount effect catches the rejection and
+  // silently falls back to muted autoplay so the video still starts.
+  const [heroMuted, setHeroMuted] = React.useState(false);
   const videoRef = React.useRef<HTMLVideoElement | null>(null);
-  // Keep the element's muted/volume in sync with state (React's `muted` prop
-  // alone is unreliable across browsers).
+  // On mount: try to play with sound; fall back to muted on failure.
+  React.useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.muted = false;
+    el.volume = 1;
+    const pr = el.play();
+    if (pr && typeof pr.catch === 'function') {
+      pr.catch(() => {
+        el.muted = true;
+        setHeroMuted(true);
+        const p2 = el.play();
+        if (p2 && typeof p2.catch === 'function') p2.catch(() => { /* give up */ });
+      });
+    }
+  }, []);
+  // Keep the element's muted/volume in sync when the user toggles it.
   React.useEffect(() => {
     const el = videoRef.current;
     if (el) {
