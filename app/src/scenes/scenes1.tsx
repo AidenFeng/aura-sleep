@@ -58,7 +58,7 @@ export function MattressViz({ active = true, scale = 1, onDark = false }: { acti
       ),
       readout('14%', coolC, tx('凉感 · 左', 'COOL · L'), leftT, true, onDark),
       readout('auto', warmC, tx('暖感 · 右', 'WARM · R'), rightT, false, onDark),
-      h('div', { style: { position: 'absolute', left: 0, right: 0, bottom: -6, display: 'flex', justifyContent: 'center', gap: 10 } },
+      h('div', { style: { position: 'absolute', left: 0, right: 0, bottom: -48, display: 'flex', justifyContent: 'center', gap: 10 } },
         spec(tx('双区独立', 'Dual-zone'), tx('温控', 'climate'), onDark),
         spec(tx('AI睡眠', 'AI sleep'), tx('监测', 'tracking'), onDark),
         spec(tx('生理周期', 'Cycle'), tx('优化', 'optimized'), onDark))
