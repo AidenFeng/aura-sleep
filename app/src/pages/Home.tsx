@@ -190,7 +190,7 @@ function FeatureRow({ id, reverse, eyebrow, title, body, bullets, stat, Scene, i
           {stat ? (
             <div className="feat-stat">
               <Title style={{ fontSize: 40, color: '#b8893f', lineHeight: '1' }}>{stat.big}</Title>
-              <Label dim style={{ marginTop: 4 }}>{stat.label}</Label>
+              <Label dim>{stat.label}</Label>
             </div>
           ) : null}
         </div>

@@ -74,7 +74,7 @@
 .home-root .demo-card > div { width: 100% !important; }
 .home-root .bullets { display: flex; flex-direction: column; gap: 11px; margin-top: 24px; }
 .home-root .bullet { display: flex; gap: 11px; align-items: flex-start; }
-.home-root .feat-stat { margin-top: 30px; }
+.home-root .feat-stat { margin-top: 30px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 @media (max-width: 920px) {
   .home-root .feat-grid { grid-template-columns: 1fr; gap: 8px; }
   .home-root .feat.reverse .feat-text, .home-root .feat.reverse .feat-phone { order: 0; }
