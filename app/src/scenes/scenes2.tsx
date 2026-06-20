@@ -130,7 +130,7 @@ export function SceneAnalysis({ active = true }: { active?: boolean }) {
     { n: tx('清醒', 'Awake'), v: 6, c: '#e16a7d' },
   ];
   const insight = tx('深睡较上周提升 18%。今晚把降温提前 20 分钟，预计可再延长深睡 12 分钟。', 'Deep sleep +18% vs last week. Cooling 20 min earlier tonight could add ~12 min more.');
-  const rev = phase(p, 0.5, 0.84), shown = insight.slice(0, Math.floor(insight.length * rev)), typing = rev > 0 && rev < 1;
+  const rev = phase(p, 0.22, 0.56), shown = insight.slice(0, Math.floor(insight.length * rev)), typing = rev > 0 && rev < 1;
 
   return h(React.Fragment, null,
     h(AppBar, { left: tx('AI 分析 · Insights', 'AI insights'), right: tx('今晨 06:40', 'Today 06:40') }),
