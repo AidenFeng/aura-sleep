@@ -4,7 +4,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Title, Body, Label, Caption, Button, Pill, Card, SectionLabel } from '../ds';
-import { MotionCtx, useSharedLang, useTx, asset } from '../lib/motion';
+import { MotionCtx, useSharedLang, useTx, asset, useDevControls } from '../lib/motion';
 import { useVisible } from '../lib/reveal';
 import { Phone } from '../lib/motion';
 import { MattressViz, SceneClimate } from '../scenes/scenes1';
@@ -28,23 +28,59 @@ function LangToggle({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void 
   );
 }
 
+// Tracks which section is in view (nav highlight) + whether the page has
+// scrolled past the top (nav shadow).
+function useScrollChrome(ids: string[]) {
+  const [active, setActive] = React.useState('top');
+  const [scrolled, setScrolled] = React.useState(false);
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      io.disconnect();
+    };
+  }, []);
+  return { active, scrolled };
+}
+
+const NAV_LINKS: { href: string; id: string; zh: string; en: string }[] = [
+  { href: '#top', id: 'top', zh: '产品主页', en: 'Home' },
+  { href: '#tech', id: 'tech', zh: '智能床垫', en: 'Smart cover' },
+  { href: '#ai', id: 'ai', zh: 'AI睡眠监测', en: 'AI sleep' },
+  { href: '#women', id: 'women', zh: '健康追踪', en: 'Health' },
+  { href: '#pricing', id: 'pricing', zh: '价格', en: 'Pricing' },
+  { href: '#faq', id: 'faq', zh: '常见问题', en: 'FAQ' },
+];
+
 function Nav({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
   const tx = (zh: string, en: string) => (lang === 'en' ? en : zh);
   const nav = useNavigate();
+  const { active, scrolled } = useScrollChrome(NAV_LINKS.map((l) => l.id));
   return (
-    <div className="nav">
+    <div className={'nav' + (scrolled ? ' scrolled' : '')}>
       <div className="nav-inner page-wrap">
         <a className="wordmark" href="#top">
           <img src={asset('assets/aura-logo.svg')} alt="AURA" className="brand-mark" />
           AURA
         </a>
         <div className="nav-links">
-          <a href="#top">{tx('产品主页', 'Home')}</a>
-          <a href="#tech">{tx('智能床垫', 'Smart cover')}</a>
-          <a href="#ai">{tx('AI睡眠监测', 'AI sleep')}</a>
-          <a href="#women">{tx('健康追踪', 'Health')}</a>
-          <a href="#pricing">{tx('价格', 'Pricing')}</a>
-          <a href="#faq">{tx('常见问题', 'FAQ')}</a>
+          {NAV_LINKS.map((l) => (
+            <a key={l.id} href={l.href} className={active === l.id ? 'on' : ''}>{tx(l.zh, l.en)}</a>
+          ))}
         </div>
         <div className="nav-right">
           <LangToggle lang={lang} setLang={setLang} />
@@ -129,6 +165,7 @@ function Hero({ lang }: { lang: Lang }) {
         ref={videoRef}
         className="hero-video"
         src={asset(HERO_VIDEO)}
+        poster={asset('assets/hero-poster.jpg')}
         autoPlay
         loop={false}
         muted={heroMuted}
@@ -287,7 +324,7 @@ function Personas({ lang }: { lang: Lang }) {
         <div className="persona-grid">
           {people.map((p, i) => (
             <div key={i} className={'reveal' + (seen ? ' in' : '')} style={{ transitionDelay: i * 0.08 + 's' }}>
-              <Card style={{ padding: 26, height: '100%' }}>
+              <Card className="lift-card" style={{ padding: 26, height: '100%' }}>
                 <div className="persona-ico" style={{ background: p.g }}>{personaIcon(i)}</div>
                 <div className="persona-body" style={{ marginTop: 18 }}>
                   <Title style={{ fontSize: 24, color: '#1a2238', marginBottom: 7 }}>{p.t}</Title>
@@ -305,16 +342,23 @@ function Personas({ lang }: { lang: Lang }) {
 function WaitlistCTA({ lang }: { lang: Lang }) {
   const tx = (zh: string, en: string) => (lang === 'en' ? en : zh);
   const [ref, , seen] = useVisible(0.2);
+  const [submitted, setSubmitted] = React.useState(false);
   return (
     <section className="waitlist" ref={ref as React.RefObject<HTMLElement>}>
       <div className={'page-wrap waitlist-inner reveal' + (seen ? ' in' : '')}>
         <p className="waitlist-eyebrow">{tx('订阅锁定优惠', 'Subscribe & save')}</p>
-        <h2 className="waitlist-title">{tx('想了解更多？', 'Want to know more?')}</h2>
-        <p className="waitlist-sub">{tx('订阅邮件即刻锁定早鸟优惠资格,并订阅我们更多活动消息。', 'Subscribe to lock in early-bird pricing and get our latest news.')}</p>
-        <form className="waitlist-form" onSubmit={(e) => e.preventDefault()}>
-          <input className="waitlist-input" type="email" placeholder="you@email.com" aria-label="Email" />
-          <button className="waitlist-btn" type="submit">{tx('订阅并锁定优惠', 'Subscribe & lock in')}</button>
-        </form>
+        <h2 className="waitlist-title">{submitted ? tx('已订阅 ✓', 'Subscribed ✓') : tx('想了解更多？', 'Want to know more?')}</h2>
+        <p className="waitlist-sub">
+          {submitted
+            ? tx('谢谢！早鸟优惠资格已为你锁定,我们会把最新消息发到你的邮箱。', 'Thanks! Your early-bird spot is locked in — we’ll email you the latest.')
+            : tx('订阅邮件即刻锁定早鸟优惠资格,并订阅我们更多活动消息。', 'Subscribe to lock in early-bird pricing and get our latest news.')}
+        </p>
+        {submitted ? null : (
+          <form className="waitlist-form" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
+            <input className="waitlist-input" type="email" required placeholder="you@email.com" aria-label="Email" />
+            <button className="waitlist-btn" type="submit">{tx('订阅并锁定优惠', 'Subscribe & lock in')}</button>
+          </form>
+        )}
       </div>
     </section>
   );
@@ -378,6 +422,7 @@ export default function Home() {
   const [lang, setLang] = useSharedLang();
   const [paused, setPaused] = React.useState(false);
   const [speed, setSpeed] = React.useState(1);
+  const showDev = useDevControls();
   const tx = (zh: string, en: string) => (lang === 'en' ? en : zh);
 
   const features: Feature[] = [
@@ -427,7 +472,7 @@ export default function Home() {
       <ClosingCTA lang={lang} />
       <Footer lang={lang} />
       <StickyBuyBar lang={lang} />
-      <MotionControls paused={paused} setPaused={setPaused} speed={speed} setSpeed={setSpeed} />
+      {showDev && <MotionControls paused={paused} setPaused={setPaused} speed={speed} setSpeed={setSpeed} />}
       </div>
     </MotionCtx.Provider>
   );

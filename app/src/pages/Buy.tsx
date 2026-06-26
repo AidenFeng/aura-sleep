@@ -4,7 +4,7 @@
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Title, Body, Caption, Label, Button, Pill, Card, SectionLabel, PremiumTag } from '../ds';
-import { MotionCtx, useSharedLang, useTx, Phone, asset } from '../lib/motion';
+import { MotionCtx, useSharedLang, useTx, Phone, asset, useDevControls } from '../lib/motion';
 import { useVisible, useReveal } from '../lib/reveal';
 import { SceneClimate } from '../scenes/scenes1';
 import { SceneWomen, SceneAnalysis } from '../scenes/scenes2';
@@ -591,6 +591,7 @@ export default function Buy() {
   const [lang, setLang] = useSharedLang();
   const [paused, setPaused] = React.useState(false);
   const [speed, setSpeed] = React.useState(1);
+  const showDev = useDevControls();
   const [state, setState] = React.useState<BuyState>({ size: 'queen', plan: 'std', qty: 1 });
   const [cart, setCart] = React.useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = React.useState(false);
@@ -630,7 +631,7 @@ export default function Buy() {
         <DBuyBar lang={lang} total={total} addToCart={addToCart} />
         <CartToast lang={lang} toast={toast} onView={() => { setToast(null); setCartOpen(true); }} />
         <CartDrawer lang={lang} open={cartOpen} cart={cart} setCart={setCart} onClose={() => setCartOpen(false)} />
-        <DMotion paused={paused} setPaused={setPaused} speed={speed} setSpeed={setSpeed} />
+        {showDev && <DMotion paused={paused} setPaused={setPaused} speed={speed} setSpeed={setSpeed} />}
       </div>
     </MotionCtx.Provider>
   );

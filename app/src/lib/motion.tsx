@@ -11,6 +11,22 @@ export function asset(path: string) {
   return base + p;
 }
 
+// ── dev-only motion controls toggle: hidden from visitors, press "M" to
+//    show/hide (used for recording animation clips) ────────────
+export function useDevControls() {
+  const [show, setShow] = React.useState(false);
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      if ((e.key === 'm' || e.key === 'M') && !e.metaKey && !e.ctrlKey && !e.altKey) setShow((s) => !s);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+  return show;
+}
+
 // ── Motion context ──────────────────────────────────────────────
 export interface MotionState {
   speed: number;

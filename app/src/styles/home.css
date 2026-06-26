@@ -6,7 +6,7 @@
 /* nav */
 .home-root .nav { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%); background: rgba(255,255,255,0.66);
-  border-bottom: 1px solid var(--hair); }
+  border-bottom: 1px solid var(--hair); transition: background .25s ease, box-shadow .25s ease; }
 .home-root .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 66px; }
 .home-root .wordmark { font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 23px;
   letter-spacing: 1.5px; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 9px; }
@@ -17,6 +17,8 @@
 .home-root .nav-links { display: flex; gap: 28px; }
 .home-root .nav-links a { color: var(--dim); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
 .home-root .nav-links a:hover { color: var(--ink); }
+.home-root .nav-links a.on { color: var(--gold); }
+.home-root .nav.scrolled { background: rgba(255,255,255,0.85); box-shadow: 0 6px 24px -14px rgba(40,60,90,0.3); }
 .home-root .nav-right { display: flex; align-items: center; gap: 14px; }
 @media (max-width: 860px) { .home-root .nav-links { display: none; } }
 @media (max-width: 520px) { .home-root .nav-cta { display: none; } }
@@ -172,9 +174,19 @@
 @media (max-width: 760px) { .home-root .footer-grid { grid-template-columns: 1fr; gap: 28px; } }
 @media (max-width: 480px) { .home-root .footer-cols { grid-template-columns: 1fr; } }
 
-/* reveal — content always visible */
-.home-root .reveal { opacity: 1; transform: none; }
+/* reveal — hidden base state, fades up when scrolled into view (JS adds .in) */
+.home-root .reveal { opacity: 0; transform: translateY(24px);
+  transition: opacity .7s cubic-bezier(.2,.6,.2,1), transform .7s cubic-bezier(.2,.6,.2,1); }
 .home-root .reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .home-root .reveal, .home-root .reveal.in { opacity: 1; transform: none; transition: none; }
+}
+
+/* card hover lift (inner cards carry .lift-card; price cards get a shadow pop) */
+.home-root .lift-card { transition: transform .26s ease, box-shadow .26s ease; }
+.home-root .lift-card:hover { transform: translateY(-5px); box-shadow: 0 26px 60px -22px rgba(40,60,90,0.30); }
+.home-root .price-card { transition: box-shadow .26s ease, transform .26s ease; }
+.home-root .price-card:hover { box-shadow: 0 30px 66px -22px rgba(40,60,90,0.34); }
 
 /* motion control */
 .home-root .motion-ctl { position: fixed; left: 18px; bottom: 18px; z-index: 200; display: flex;

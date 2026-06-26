@@ -65,7 +65,7 @@ export function Pillars({ lang }: { lang: Lang }) {
         <div className="pillar-grid">
           {items.map((it, idx) => (
             <div key={idx} className={'reveal' + (seen ? ' in' : '')} style={{ transitionDelay: idx * 0.07 + 's' }}>
-              <Card style={{ padding: 22, height: '100%' }}>
+              <Card className="lift-card" style={{ padding: 22, height: '100%' }}>
                 <div className="pillar-ico">{pillarIcon(it.i)}</div>
                 <Title style={{ fontSize: 21, color: '#1a2238', marginTop: 16, marginBottom: 7 }}>{it.t}</Title>
                 <Body dim variant="body" style={{ lineHeight: '1.6' }}>{it.d}</Body>
@@ -101,7 +101,7 @@ export function Reviews({ lang }: { lang: Lang }) {
         <div className="review-grid">
           {list.map((r, i) => (
             <div key={i} className={'reveal' + (seen ? ' in' : '')} style={{ transitionDelay: i * 0.08 + 's' }}>
-              <Card style={{ padding: 22, height: '100%' }}>
+              <Card className="lift-card" style={{ padding: 22, height: '100%' }}>
                 <div style={{ marginBottom: 12 }}>{stars()}</div>
                 <Body variant="bodyLg" style={{ fontSize: 16, lineHeight: '1.6', color: '#1a2238', marginBottom: 16 }}>{'“' + r.q + '”'}</Body>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
